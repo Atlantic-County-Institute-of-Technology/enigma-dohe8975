@@ -1,17 +1,41 @@
 # enigma.py
 # description: a simple rotational ciphertext program that can create
 # custom encoded messages, as well as encode and decode from file.
-# author: YOUR_NAME_HERE
-# created: MM.DD.YYYY
-# last update:  MM.DD.YYYY
+# author: Gates Doherty
+# created: 11/18/2024
+# last update:  11/18/2024
 import random
 
 # we'll be using this string for the majority of our translations
 alphabet = "abcdefghijklmnopqrstuvwxyz"
 
 # user inputs a message and selects a key (or random), the message is then translated using the cipher
-def encode_message():
-    pass
+def encode_message(UserIn, UserKey):
+    out_string = ""
+    for i in range(len(UserIn)):
+        x = ord(UserIn[i]) + UserKey
+        print(x)
+        if 65 <= x <= 90:
+            out_string += chr(x)
+        if 97 <= x <= 122:
+            out_string += chr(x)
+        if x + UserKey >= 123:
+            x = ord(UserIn[i]) + UserKey - 26
+            out_string += chr(x)
+    print(out_string)
+
+    out_string = ""
+    for char in UserIn:
+        if 65 <= ord(char) <= 90:
+         # uppercase to lower case
+         out_string += chr(ord(char) + 32)
+         # lowercase to uppercase
+        elif 97 <= ord(char) <= 122:
+            out_string += chr(ord(char) - 32)
+        else:
+            out_string += char
+
+
 
 # encodes a target file, similarly to encode_message, except now targeting a filename
 def encode_file():
@@ -40,7 +64,10 @@ def main():
         selection = input("Choose an option:")
 
         if selection == "1":
-            encode_message()
+            UserIn = str(input("Please enter the message you'd like to encode: "))
+            UserKey = int(input("Enter the rotational cipher key. (Press enter for a random value): "))
+            encode_message(UserIn, UserKey)
+
         elif selection == "2":
             encode_file()
         elif selection == "3":
